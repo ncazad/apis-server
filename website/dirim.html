@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AZADX69X API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Segoe UI', 'sans-serif'],
+                        mono: ['Consolas', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s infinite',
+                        'slideIn': 'slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'popIn': 'popIn 0.3s ease-out forwards',
+                        'loading': 'loading 2.5s ease-in-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                        'shine': 'shine 2s linear infinite',
+                        'glow': 'glow 2s ease-in-out infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(0)' }
+                        },
+                        popIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' }
+                        },
+                        loading: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        shine: {
+                            '0%': { backgroundPosition: '-200% center' },
+                            '100%': { backgroundPosition: '200% center' }
+                        },
+                        glow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(56, 189, 248, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(56, 189, 248, 0.8)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: #000000;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            touch-action: manipulation;
+        }
+        
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        /* Mobile Optimized Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #38bdf8, #3b82f6);
+            border-radius: 4px;
+        }
+        
+        /* Glass Effects */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
+        }
+        
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
+            outline: none;
+        }
+        
+        .glass-button {
+            background: linear-gradient(45deg, #3b82f6, #38bdf8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(45deg, #38bdf8, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 2s linear infinite;
+        }
+        
+        /* Loading Animation */
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(56, 189, 248, 0.3);
+            border-radius: 50%;
+            border-top-color: #38bdf8;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Card Hover Effect */
+        .api-card {
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+        }
+        
+        .api-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+            background: rgba(15, 23, 42, 0.8);
+        }
+        
+        /* Notification */
+        .notification {
+            background: linear-gradient(45deg, #0f172a, #1e293b);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* API Method Badges */
+        .method-get {
+            background: linear-gradient(45deg, #10b981, #34d399);
+            color: white;
+        }
+        
+        .method-post {
+            background: linear-gradient(45deg, #f59e0b, #fbbf24);
+            color: white;
+        }
+        
+        .method-put {
+            background: linear-gradient(45deg, #8b5cf6, #a78bfa);
+            color: white;
+        }
+        
+        .method-delete {
+            background: linear-gradient(45deg, #ef4444, #f87171);
+            color: white;
+        }
+        
+        /* Sidebar Left - CATEGORY SIDEBAR */
+        .sidebar-left {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 55;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Right Sidebar - PERSONAL INFO ONLY */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 320px;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 50;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-left: 1px solid rgba(56, 189, 248, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .sidebar-menu.active {
+            transform: translateX(0);
+        }
+        
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 45;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Personal Info Section - Mobile Optimized */
+        .personal-info-section {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        /* Info Card - Mobile Optimized */
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        /* Social Links - Mobile Optimized */
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+        }
+        
+        .social-link:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Skill Badge - Mobile Optimized */
+        .skill-badge {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #38bdf8;
+        }
+        
+        /* Mobile Optimized Buttons */
+        .mobile-btn {
+            min-height: 44px;
+            min-width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Touch Friendly Elements */
+        .touch-friendly {
+            min-height: 44px;
+            padding: 12px;
+        }
+        
+        /* Mobile Modal */
+        .mobile-modal {
+            width: 95vw;
+            max-height: 90vh;
+            margin: 0 auto;
+        }
+        
+        /* Responsive Text Sizes */
+        .text-responsive {
+            font-size: clamp(0.875rem, 2.5vw, 1rem);
+        }
+        
+        .heading-responsive {
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
+        }
+        
+        .title-responsive {
+            font-size: clamp(1.5rem, 5vw, 2rem);
+        }
+        
+        /* Mobile Grid */
+        .mobile-grid {
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+        
+        /* Safe Area Insets for Notch Phones */
+        .safe-top {
+            padding-top: env(safe-area-inset-top);
+        }
+        
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        /* Swipe Gesture Support */
+        .swipe-area {
+            position: absolute;
+            top: 0;
+            width: 20px;
+            height: 100%;
+        }
+        
+        .swipe-left {
+            left: 0;
+        }
+        
+        .swipe-right {
+            right: 0;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .sidebar-left {
+                width: 85vw;
+                max-width: 300px;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar-left.active {
+                transform: translateX(0);
+            }
+            
+            .sidebar-menu {
+                width: 90vw;
+                max-width: 360px;
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+                padding: 0.75rem;
+            }
+            
+            .mobile-padding {
+                padding: 0.75rem;
+            }
+            
+            .mobile-margin {
+                margin: 0.75rem;
+            }
+            
+            .mobile-stack {
+                flex-direction: column;
+            }
+            
+            .mobile-center {
+                text-align: center;
+                justify-content: center;
+            }
+            
+            .mobile-full {
+                width: 100%;
+            }
+            
+            /* Hide scrollbar on mobile */
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            
+            /* Mobile Touch Improvements */
+            button, a, input, select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            /* Better spacing for mobile */
+            .space-y-mobile > * + * {
+                margin-top: 0.75rem;
+            }
+            
+            .gap-mobile {
+                gap: 0.75rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar-left {
+                width: 90vw;
+            }
+            
+            .sidebar-menu {
+                width: 95vw;
+            }
+            
+            .mobile-padding-sm {
+                padding: 0.5rem;
+            }
+            
+            .text-sm-mobile {
+                font-size: 0.8125rem;
+            }
+            
+            .grid-cols-mobile {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .sidebar-left {
+                width: 95vw;
+            }
+            
+            .sidebar-menu {
+                width: 100vw;
+                border-left: none;
+            }
+            
+            .mobile-padding-xs {
+                padding: 0.375rem;
+            }
+        }
+        
+        /* Tablet Optimizations */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sidebar-left {
+                width: 260px;
+            }
+            
+            .sidebar-menu {
+                width: 300px;
+            }
+            
+            .main-content {
+                margin-left: 260px !important;
+            }
+            
+            .tablet-padding {
+                padding: 1.25rem;
+            }
+        }
+        
+        /* Prevent text size adjustment on orientation change */
+        html {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        /* Smooth transitions for mobile */
+        * {
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        
+        /* Improve mobile performance */
+        .will-change {
+            will-change: transform, opacity;
+        }
+        
+        /* Mobile Loading Screen Optimization */
+        @media (max-width: 768px) {
+            #loadingScreen h1 {
+                font-size: 2.5rem !important;
+            }
+            
+            #loadingScreen p {
+                font-size: 0.875rem !important;
+            }
+            
+            .loader {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body class="safe-top safe-bottom">
+    <!-- Background Video -->
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="https://i.imgur.com/eWZ7lC2.mp4" type="video/mp4">
+        <!-- Fallback if video doesn't load -->
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); z-index: -1;"></div>
+    </video>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center">
+        <div class="relative mb-6 md:mb-8">
+            <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-slate-700 flex items-center justify-center">
+                <div class="loader"></div>
+            </div>
+            <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-sky-500 animate-spin"></div>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold mb-2 gradient-text">AZADX69X</h1>
+        <p class="text-xs md:text-sm text-slate-400 font-mono tracking-wider mb-4 md:mb-6">API DASHBOARD</p>
+        <div class="w-48 md:w-64 h-1 bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-sky-500 to-blue-500 animate-[width_2s_ease-out_forwards]"></div>
+        </div>
+        <p class="text-xs text-slate-500 mt-4 font-mono animate-pulse">Loading API Systems...</p>
+    </div>
+    
+    <!-- Left Sidebar Toggle Button (Mobile) -->
+    <button id="leftToggleBtn" class="fixed top-4 left-4 z-40 glass-panel w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg md:hidden mobile-btn">
+        <i class="fas fa-bars text-sky-400 text-lg"></i>
+    </button>
+    
+    <!-- Right Sidebar Toggle Button (3dot menu) -->
+    <button id="toggleBtn" class="fixed top-4 right-4 z-40 glass-panel w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-200 shadow-lg mobile-btn">
+        <svg id="menuIcon" class="w-6 h-6 text-sky-400 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="closeIcon" class="w-6 h-6 text-sky-400 transition-all duration-300 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+    
+    <!-- Left Sidebar - API Categories -->
+    <aside id="sidebarLeft" class="sidebar-left">
+        <!-- Header -->
+        <div class="py-4 px-4 flex justify-between items-center border-b border-slate-700/50">
+            <h3 class="text-lg font-semibold text-white">API Categories</h3>
+            <button onclick="closeLeftSidebar()" class="text-gray-400 hover:text-white md:hidden mobile-btn" aria-label="Close Sidebar">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Dashboard Link -->
+        <div class="pt-4 px-4">
+            <a href="#" onclick="showDashboard()" class="flex items-center px-3 py-3 text-white hover:bg-slate-800/50 rounded-xl transition-all active:scale-95 mb-3 glass-panel touch-friendly">
+                <span class="mr-3 text-xl"></span>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            
+            <div class="border-t border-slate-700/50 my-3 -mx-4"></div>
+            
+            <p class="text-gray-400 text-sm mb-2 font-medium px-3">Available Categories</p>
+        </div>
+        
+        <!-- Categories List -->
+        <div id="sidebarContent" class="pt-2 px-4 space-y-2 pb-6 hide-scrollbar">
+            <!-- Categories will be loaded here -->
+        </div>
+        
+        <!-- Footer -->
+        <div class="p-4 border-t border-slate-700/50 mt-auto">
+            <div class="text-center text-xs text-slate-500">
+                <p>AZADX69X APIs</p>
+                <p class="mt-1">Total: <span id="categoryCount">0</span> Categories</p>
+            </div>
+        </div>
+        
+        <!-- Swipe to close area -->
+        <div class="swipe-area swipe-right" onclick="closeLeftSidebar()"></div>
+    </aside>
+    
+    <!-- Left Sidebar Overlay (mobile) -->
+    <div id="leftSidebarOverlay" class="fixed inset-0 bg-black/50 hidden md:hidden z-[50]" onclick="closeLeftSidebar()"></div>
+    
+    <!-- Right Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <!-- Right Sidebar - PERSONAL INFO ONLY -->
+    <aside id="sidebar" class="sidebar-menu">
+        <!-- Swipe to close area -->
+        <div class="swipe-area swipe-left" onclick="closeSidebar()"></div>
+        
+        <!-- Profile Header -->
+        <div class="p-4 md:p-6 border-b border-slate-700/50">
+            <div class="flex items-center space-x-3 md:space-x-4">
+                <div class="relative">
+                    <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-sky-500/30 p-1">
+                        <img src="https://files.catbox.moe/y4cfd5.jpg" 
+                             class="w-full h-full rounded-full object-cover"
+                             alt="Profile"
+                             onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=AZADX69X&backgroundType=gradientLinear'">
+                    </div>
+                    <div class="absolute bottom-1 md:bottom-2 right-1 md:right-2 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
+                </div>
+                <div class="flex-1">
+                    <h2 id="sidebarName" class="text-xl md:text-2xl font-bold text-white">AZADX69X</h2>
+                    <p class="text-xs md:text-sm text-sky-400 font-mono mt-1">SYSTEM ADMIN</p>
+                    <div class="flex items-center gap-1 md:gap-2 mt-2">
+                        <span class="text-xs px-2 py-1 bg-slate-800/50 rounded-full border border-slate-700">Developer</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800/50 rounded-full border border-slate-700">khub chudi</span>
+                        <span class="text-xs px-2 py-1 bg-slate-800/50 rounded-full border border-slate-700">Admin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Personal Info Section -->
+        <div class="personal-info-section flex-1 hide-scrollbar">
+            <!-- Basic Info -->
+            <div class="info-card">
+                <h3 class="heading-responsive font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-user text-sky-400 text-lg"></i>
+                    Personal Information
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Full Name</span>
+                        <span class="text-sm font-medium text-white">AZAD X69X</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Age</span>
+                        <span class="text-sm font-medium text-white">18 Years</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Country</span>
+                        <span class="text-sm font-medium text-white">Bangladesh</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Religion</span>
+                        <span class="text-sm font-medium text-white">Islam</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Status</span>
+                        <span class="text-sm font-medium text-green-400 flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            Online
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Stats -->
+            <div class="info-card">
+                <h3 class="heading-responsive font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-server text-sky-400 text-lg"></i>
+                    System Statistics
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Uptime</span>
+                        <span id="uptime" class="text-sm font-mono text-sky-400">00:00:00</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Total APIs</span>
+                        <span class="text-sm font-medium text-white" id="totalApis">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">Categories</span>
+                        <span class="text-sm font-medium text-white" id="categoryCountRight">0</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-400">System Load</span>
+                        <span class="text-sm font-medium text-green-400">Normal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skills -->
+            <div class="info-card">
+                <h3 class="heading-responsive font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-code text-sky-400 text-lg"></i>
+                    Technical Skills
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="skill-badge">JavaScript</span>
+                    <span class="skill-badge">Node.js</span>
+                    <span class="skill-badge">Python</span>
+                    <span class="skill-badge">API Development</span>
+                    <span class="skill-badge">System Admin</span>
+                    <span class="skill-badge">Database</span>
+                    <span class="skill-badge">Networking</span>
+                </div>
+            </div>
+            
+            <!-- Contact & Social -->
+            <div class="info-card">
+                <h3 class="heading-responsive font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-share-alt text-sky-400 text-lg"></i>
+                    Connect With Me
+                </h3>
+                <div class="space-y-2">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github text-xl"></i>
+                        <div>
+                            <div class="text-sm font-medium">ncazad</div>
+                            <div class="text-xs text-gray-400">@AZADX69X</div>
+                        </div>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook text-xl text-blue-500"></i>
+                        <div>
+                            <div class="text-sm font-medium">Facebook</div>
+                            <div class="text-xs text-gray-400">Azad69x</div>
+                        </div>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-telegram text-xl text-blue-400"></i>
+                        <div>
+                            <div class="text-sm font-medium">Telegram</div>
+                            <div class="text-xs text-gray-400">@AZADX69X</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- About Me -->
+            <div class="info-card">
+                <h3 class="heading-responsive font-bold text-white mb-3 flex items-center gap-2">
+                    <i class="fas fa-info-circle text-sky-400 text-lg"></i>
+                    About Me
+                </h3>
+                <p class="text-sm text-gray-300 leading-relaxed">
+                    Full-stack developer and system administrator with expertise in API development, 
+                    cybersecurity, and network management. Passionate about creating efficient systems 
+                    and solving complex technical challenges.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="p-4 border-t border-slate-700/50">
+            <div class="text-center text-xs text-slate-500">
+                <p>© 2026 AZADX69X • All Rights Reserved</p>
+                <p class="mt-1"></p>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <main id="mainContent" class="ml-0 md:ml-[280px] min-h-screen transition-all duration-300 p-3 md:p-6">
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" class="h-full">
+            <div class="max-w-6xl mx-auto">
+                <!-- Empty Dashboard Message -->
+                <div class="h-[calc(100vh-120px)] md:h-[70vh] flex flex-col items-center justify-center mobile-padding">
+                    <div class="text-center w-full">
+                        <div class="w-32 h-32 md:w-40 md:h-40 mx-auto mb-4 md:mb-6 flex items-center justify-center">
+                            <div class="relative">
+                                <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-sky-500/20 animate-pulse"></div>
+                                <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-sky-500 animate-spin"></div>
+                                <div class="absolute inset-4 md:inset-4 rounded-full bg-sky-500/10 flex items-center justify-center">
+                                    <i class="fas fa-code text-2xl md:text-4xl text-sky-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="text-xl md:text-2xl font-bold text-white mb-2">Select a Category</h2>
+                        <p class="text-gray-400 max-w-md mx-auto text-sm md:text-base">
+                            Choose an API category from the sidebar to view and test available endpoints.
+                        </p>
+                        <div class="mt-4 md:mt-6 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+                            <div class="flex items-center text-xs md:text-sm text-gray-500">
+                                <div class="w-2 h-2 rounded-full bg-green-500 mr-2"></div>
+                                <span>System Status: Online</span>
+                            </div>
+                            <div class="flex items-center text-xs md:text-sm text-gray-500">
+                                <div class="w-2 h-2 rounded-full bg-sky-500 mr-2"></div>
+                                <span id="totalApisMessage">Total APIs: Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Category Content -->
+        <div id="categoryContent" class="hidden h-full">
+            <div class="max-w-6xl mx-auto">
+                <div id="categoryHeader" class="mb-4 md:mb-8">
+                    <h1 class="text-2xl md:text-4xl font-bold text-white mb-2 title-responsive">Category</h1>
+                    <p class="text-slate-400 text-sm md:text-base" id="categoryDescription"></p>
+                </div>
+                
+                <div id="categoryApisGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+                    <!-- Category APIs will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- API Response Modal - Mobile Optimized -->
+    <div id="apiResponseModal" class="fixed inset-0 z-[60] flex items-center justify-center p-2 md:p-4 hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modalOverlay"></div>
+        <div class="relative w-full max-w-4xl max-h-[95vh] md:max-h-[90vh] overflow-hidden glass-panel rounded-xl md:rounded-2xl shadow-2xl mobile-modal">
+            <!-- Header -->
+            <div class="p-4 md:p-6 border-b border-slate-700/50">
+                <div class="flex items-center justify-between">
+                    <div class="pr-4">
+                        <h3 id="apiResponseModalLabel" class="text-lg md:text-2xl font-bold text-white title-responsive"></h3>
+                        <p id="apiResponseModalDesc" class="text-xs md:text-sm text-slate-400 mt-1 line-clamp-2"></p>
+                    </div>
+                    <button id="closeModalBtn" class="glass-input w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center hover:bg-slate-700/50 active:scale-95 mobile-btn flex-shrink-0">
+                        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-4 md:p-6 overflow-y-auto max-h-[60vh]">
+                <!-- Endpoint -->
+                <div class="mb-4 md:mb-6">
+                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">Endpoint</label>
+                    <div class="flex flex-col md:flex-row items-stretch md:items-center gap-2">
+                        <code id="apiEndpointDisplay" class="flex-1 glass-input px-3 md:px-4 py-2 md:py-3 rounded-lg font-mono text-xs md:text-sm break-all"></code>
+                        <button id="copyEndpointBtn" class="glass-button px-3 md:px-4 py-2 md:py-3 rounded-lg text-xs md:text-sm font-medium whitespace-nowrap touch-friendly">
+                            Copy
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Query Parameters -->
+                <div id="apiQueryInputContainer" class="space-y-3 md:space-y-4 mb-4 md:mb-6"></div>
+                
+                <!-- Response Area -->
+                <div>
+                    <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">Response</label>
+                    <div id="responseArea" class="relative min-h-[200px] md:min-h-[300px] glass-input rounded-lg overflow-hidden">
+                        <!-- Loading -->
+                        <div id="apiResponseLoading" class="absolute inset-0 hidden items-center justify-center">
+                            <div class="text-center">
+                                <div class="loader mx-auto mb-4"></div>
+                                <p class="text-sm text-slate-400">Fetching data...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="emptyState" class="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-8">
+                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4">
+                                <svg class="w-6 h-6 md:w-8 md:h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-500 text-center">Response will appear here after execution</p>
+                        </div>
+                        
+                        <!-- Response Content -->
+                        <div id="apiResponseContent" class="hidden p-3 md:p-6">
+                            <pre id="responsePre" class="text-xs md:text-sm font-mono whitespace-pre-wrap break-all overflow-auto max-h-[300px]"></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Copy Response Button -->
+                <div class="mt-4 md:mt-6 flex justify-end">
+                    <button id="copyResBtn" class="glass-button px-4 md:px-6 py-2 md:py-3 rounded-lg font-medium hidden text-sm md:text-base touch-friendly">
+                        Copy Response
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="p-4 md:p-6 border-t border-slate-700/50">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0">
+                    <div class="text-xs text-slate-500">
+                        <span id="responseStatus" class="font-mono"></span>
+                        <span id="responseTime" class="ml-2 md:ml-4"></span>
+                    </div>
+                    <button id="submitQueryBtn" class="glass-button px-6 md:px-8 py-2 md:py-3 rounded-lg font-medium w-full md:w-auto text-sm md:text-base touch-friendly">
+                        Execute Request
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification - Mobile Optimized -->
+    <div id="notificationPopup" class="fixed bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 z-[70] px-4 py-2 md:px-6 md:py-3 rounded-full notification text-xs md:text-sm font-medium shadow-lg transition-all duration-300 translate-y-10 opacity-0 max-w-[90vw]">
+        <div class="flex items-center space-x-2">
+            <svg class="w-4 h-4 md:w-5 md:h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span id="notificationText" class="truncate max-w-[70vw] md:max-w-none"></span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        let startTime = Date.now();
+        let currentItem = null;
+        let currentBaseUrl = window.location.origin;
+        let isMenuOpen = false;
+        let isLeftMenuOpen = false;
+        let allCategories = [];
+        let allApis = [];
+        let currentCategory = null;
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // DOM Elements
+        const video = document.getElementById('bg-video');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const leftToggleBtn = document.getElementById('leftToggleBtn');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarLeft = document.getElementById('sidebarLeft');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const leftSidebarOverlay = document.getElementById('leftSidebarOverlay');
+        const sidebarContent = document.getElementById('sidebarContent');
+        const modal = document.getElementById('apiResponseModal');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const submitQueryBtn = document.getElementById('submitQueryBtn');
+        const copyEndpointBtn = document.getElementById('copyEndpointBtn');
+        const copyResBtn = document.getElementById('copyResBtn');
+        const responseArea = document.getElementById('responseArea');
+        const emptyState = document.getElementById('emptyState');
+        const responseLoading = document.getElementById('apiResponseLoading');
+        const responseContent = document.getElementById('apiResponseContent');
+        const responsePre = document.getElementById('responsePre');
+        const notificationPopup = document.getElementById('notificationPopup');
+        const notificationText = document.getElementById('notificationText');
+        const mainContent = document.getElementById('mainContent');
+        const dashboardContent = document.getElementById('dashboardContent');
+        const categoryContent = document.getElementById('categoryContent');
+        const categoryHeader = document.getElementById('categoryHeader');
+        const categoryDescription = document.getElementById('categoryDescription');
+        const categoryApisGrid = document.getElementById('categoryApisGrid');
+        const totalApisMessage = document.getElementById('totalApisMessage');
+
+        // On Load
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Try to play video with better error handling
+            try {
+                video.muted = true;
+                video.playsInline = true;
+                video.setAttribute('playsinline', '');
+                video.setAttribute('webkit-playsinline', '');
+                const playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Video autoplay was prevented.");
+                    });
+                }
+            } catch (e) {
+                console.log("Video error:", e);
+            }
+            
+            // Loading screen timeout
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            }, 2000);
+            
+            // Start uptime counter
+            updateUptime();
+            setInterval(updateUptime, 1000);
+            
+            // Detect mobile device
+            detectMobile();
+            
+            // Render data and setup
+            await renderData();
+            setupEventListeners();
+            loadLeftSidebarCategories();
+            showDashboard();
+        });
+
+        // Detect mobile and apply optimizations
+        function detectMobile() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                document.body.classList.add('mobile-device');
+                // Disable hover effects on mobile
+                document.querySelectorAll('.hover\\:transform').forEach(el => {
+                    el.classList.remove('hover:transform');
+                });
+            }
+        }
+
+        // Update Uptime
+        function updateUptime() {
+            const now = Date.now();
+            const diff = Math.floor((now - startTime) / 1000);
+            const h = Math.floor(diff / 3600).toString().padStart(2, '0');
+            const m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+            const s = (diff % 60).toString().padStart(2, '0');
+            document.getElementById('uptime').textContent = `${h}:${m}:${s}`;
+        }
+
+        // Setup Event Listeners with Mobile Optimizations
+        function setupEventListeners() {
+            // Sidebar Toggle with touch events
+            toggleBtn.addEventListener('click', toggleSidebar);
+            toggleBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                toggleSidebar();
+            }, { passive: false });
+            
+            leftToggleBtn.addEventListener('click', toggleLeftSidebar);
+            leftToggleBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                toggleLeftSidebar();
+            }, { passive: false });
+            
+            // Left Sidebar Overlay only closes left sidebar
+            leftSidebarOverlay.addEventListener('click', closeLeftSidebar);
+            leftSidebarOverlay.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                closeLeftSidebar();
+            }, { passive: false });
+            
+            // Modal
+            modalOverlay.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                closeModal();
+            }, { passive: false });
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            closeModalBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                closeModal();
+            }, { passive: false });
+            
+            // Copy Buttons
+            copyEndpointBtn.addEventListener('click', copyEndpoint);
+            copyEndpointBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                copyEndpoint();
+            }, { passive: false });
+            
+            copyResBtn.addEventListener('click', copyResponse);
+            copyResBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                copyResponse();
+            }, { passive: false });
+            
+            // Submit Query
+            submitQueryBtn.addEventListener('click', runApi);
+            submitQueryBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                runApi();
+            }, { passive: false });
+            
+            // Swipe gestures for sidebars
+            setupSwipeGestures();
+            
+            // Handle keyboard
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (isMenuOpen) closeSidebar();
+                    if (isLeftMenuOpen) closeLeftSidebar();
+                    if (!modal.classList.contains('hidden')) closeModal();
+                }
+            });
+            
+            // Video error handling
+            video.addEventListener('error', function(e) {
+                console.log('Video error:', video.error);
+                // Fallback to gradient background
+                document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)';
+            });
+            
+            // Fix back navigation issue
+            window.addEventListener('popstate', function(event) {
+                if (isMenuOpen) {
+                    closeSidebar();
+                }
+                if (isLeftMenuOpen) {
+                    closeLeftSidebar();
+                }
+                if (!modal.classList.contains('hidden')) {
+                    closeModal();
+                }
+            });
+            
+            // Prevent sidebar from affecting browser history
+            sidebar.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+            });
+            
+            // Handle orientation change
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 100);
+            });
+            
+            // Prevent pull-to-refresh on mobile
+            document.addEventListener('touchmove', function(e) {
+                if (e.scale !== 1) { e.preventDefault(); }
+            }, { passive: false });
+        }
+
+        // Setup swipe gestures for mobile
+        function setupSwipeGestures() {
+            // Swipe to close right sidebar
+            sidebar.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            sidebar.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            // Swipe to close left sidebar
+            sidebarLeft.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            sidebarLeft.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+
+            // Swipe left to close right sidebar
+            if (swipeDistance < -swipeThreshold && isMenuOpen) {
+                closeSidebar();
+            }
+            
+            // Swipe right to close left sidebar
+            if (swipeDistance > swipeThreshold && isLeftMenuOpen) {
+                closeLeftSidebar();
+            }
+        }
+
+        // Left Sidebar Functions
+        function toggleLeftSidebar() {
+            isLeftMenuOpen = !isLeftMenuOpen;
+            sidebarLeft.classList.toggle('active', isLeftMenuOpen);
+            leftSidebarOverlay.classList.toggle('hidden', !isLeftMenuOpen);
+            
+            // Prevent body scroll when sidebar is open on mobile
+            if (isLeftMenuOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeLeftSidebar() {
+            isLeftMenuOpen = false;
+            sidebarLeft.classList.remove('active');
+            leftSidebarOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Right Sidebar Functions - PERSONAL INFO ONLY
+        function toggleSidebar() {
+            isMenuOpen = !isMenuOpen;
+            sidebar.classList.toggle('active', isMenuOpen);
+            sidebarOverlay.classList.toggle('active', isMenuOpen);
+            menuIcon.classList.toggle('hidden', isMenuOpen);
+            closeIcon.classList.toggle('hidden', !isMenuOpen);
+            
+            // Prevent body scroll when sidebar is open on mobile
+            if (isMenuOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function closeSidebar() {
+            isMenuOpen = false;
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Load Left Sidebar Categories - Mobile Optimized
+        function loadLeftSidebarCategories() {
+            let html = '';
+            
+            if (allCategories.length === 0) {
+                html = `
+                    <div class="text-center py-8 px-4">
+                        <div class="w-16 h-16 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 mx-auto">
+                            <i class="fas fa-exclamation-triangle text-yellow-500 text-2xl"></i>
+                        </div>
+                        <p class="text-slate-400 text-sm">No API categories found</p>
+                        <p class="text-slate-500 text-xs mt-2">Check if /api/info endpoint is available</p>
+                    </div>
+                `;
+            } else {
+                allCategories.forEach(cat => {
+                    const capitalizedName = cat.name.charAt(0).toUpperCase() + cat.name.slice(1);
+                    const isActive = currentCategory && currentCategory.name === cat.name;
+                    
+                    html += `
+                        <a href="#" onclick="showCategory('${cat.name}')" 
+                           class="flex items-center justify-between px-3 py-3 text-white hover:bg-slate-800/50 rounded-xl transition-all active:scale-95 ${isActive ? 'bg-slate-800/70 border-l-2 border-sky-500 pl-3 font-medium' : ''} touch-friendly">
+                            <div class="flex items-center">
+                                <span class="mr-3 text-xl">${cat.icon}</span>
+                                <span class="font-medium truncate">${capitalizedName}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="text-xs text-gray-500 mr-2">(${cat.items.length})</span>
+                                <span class="text-gray-400">›</span>
+                            </div>
+                        </a>
+                    `;
+                });
+            }
+            
+            sidebarContent.innerHTML = html;
+            document.getElementById('categoryCount').textContent = allCategories.length;
+            document.getElementById('categoryCountRight').textContent = allCategories.length;
+        }
+
+        // Show Dashboard - Mobile Optimized
+        function showDashboard() {
+            closeSidebar();
+            closeLeftSidebar();
+            dashboardContent.classList.remove('hidden');
+            categoryContent.classList.add('hidden');
+            mainContent.classList.remove('md:ml-[280px]');
+            
+            // Update total APIs message
+            totalApisMessage.textContent = `Total APIs: ${allApis.length}`;
+            
+            // Scroll to top on mobile
+            if (window.innerWidth <= 768) {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Show Category - Mobile Optimized
+        function showCategory(categoryName) {
+            closeSidebar();
+            closeLeftSidebar();
+            dashboardContent.classList.add('hidden');
+            categoryContent.classList.remove('hidden');
+            mainContent.classList.remove('md:ml-[280px]');
+            
+            const category = allCategories.find(cat => cat.name === categoryName);
+            if (!category) return;
+            
+            currentCategory = category;
+            
+            // Update header
+            const capitalizedName = category.name.charAt(0).toUpperCase() + category.name.slice(1);
+            categoryHeader.querySelector('h1').textContent = capitalizedName;
+            categoryDescription.textContent = category.description || `APIs related to ${category.name.toLowerCase()}`;
+            
+            // Load category APIs
+            loadCategoryApis(category);
+            
+            // Update left sidebar active state
+            loadLeftSidebarCategories();
+            
+            // Scroll to top on mobile
+            if (window.innerWidth <= 768) {
+                window.scrollTo(0, 0);
+            }
+        }
+
+        // Load Category APIs - Mobile Optimized
+        function loadCategoryApis(category) {
+            categoryApisGrid.innerHTML = '';
+            
+            if (category.items.length === 0) {
+                categoryApisGrid.innerHTML = `
+                    <div class="col-span-full text-center py-8 md:py-12">
+                        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-slate-800/50 flex items-center justify-center mb-4 mx-auto">
+                            <i class="fas fa-code text-2xl md:text-3xl text-slate-600"></i>
+                        </div>
+                        <p class="text-slate-400 text-base md:text-lg">No APIs available in this category</p>
+                        <p class="text-slate-500 text-sm mt-2">Check back later for new APIs</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            category.items.forEach(item => {
+                const apiDiv = document.createElement('div');
+                apiDiv.className = 'glass-panel p-4 md:p-5 rounded-xl cursor-pointer active:scale-95 transition-all duration-300 touch-friendly';
+                apiDiv.onclick = () => openApiModal(item);
+                apiDiv.ontouchstart = (e) => {
+                    e.preventDefault();
+                    openApiModal(item);
+                };
+                
+                apiDiv.innerHTML = `
+                    <div class="flex items-center justify-between mb-3 md:mb-4">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-2 h-2 rounded-full bg-${getCategoryColorClass(category.color)}-500"></div>
+                            <span class="text-xs text-gray-400 truncate">${category.name}</span>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded ${getMethodClass(item.method)} whitespace-nowrap">
+                            ${item.method}
+                        </span>
+                    </div>
+                    <h3 class="font-bold text-white mb-2 text-base md:text-lg truncate">${item.displayName || item.name}</h3>
+                    <p class="text-sm text-gray-400 mb-3 md:mb-4 line-clamp-2">${item.desc || 'No description available'}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs text-gray-500">Click to test API</span>
+                        <i class="fas fa-arrow-right text-gray-400"></i>
+                    </div>
+                `;
+                
+                categoryApisGrid.appendChild(apiDiv);
+            });
+        }
+
+        // Modal Functions - Mobile Optimized
+        function openApiModal(item) {
+            currentItem = item;
+            
+            // Update Modal Info
+            document.getElementById('apiResponseModalLabel').textContent = item.displayName || item.name;
+            document.getElementById('apiResponseModalDesc').textContent = item.desc || '';
+            document.getElementById('apiEndpointDisplay').textContent = item.path;
+            
+            // Clear Previous
+            responsePre.textContent = '';
+            responseContent.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            copyResBtn.classList.add('hidden');
+            document.getElementById('responseStatus').textContent = '';
+            document.getElementById('responseTime').textContent = '';
+            
+            // Build Query Inputs
+            buildQueryInputs(item);
+            
+            // Show Modal
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Build Query Inputs - Mobile Optimized
+        function buildQueryInputs(item) {
+            const container = document.getElementById('apiQueryInputContainer');
+            container.innerHTML = '';
+            
+            // Check if item has parameters in the path (like /api/search?q=)
+            const url = new URL(item.path, 'http://localhost');
+            const params = Array.from(url.searchParams.keys());
+            
+            if (params.length > 0 || item.params) {
+                const label = document.createElement('label');
+                label.className = 'text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block';
+                label.textContent = 'Parameters';
+                container.appendChild(label);
+                
+                // Use predefined params or extract from URL
+                const parameters = item.params || params.map(p => ({
+                    name: p,
+                    description: `Enter value for ${p}`,
+                    required: true
+                }));
+                
+                parameters.forEach(param => {
+                    const div = document.createElement('div');
+                    div.className = 'space-y-2';
+                    div.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-slate-300">${param.name}</span>
+                            <span class="text-xs text-slate-500">${param.required ? 'Required' : 'Optional'}</span>
+                        </div>
+                        <input type="text" 
+                               data-key="${param.name}"
+                               class="glass-input w-full px-3 md:px-4 py-2 md:py-3 rounded-lg text-sm md:text-base"
+                               placeholder="${param.description || `Enter ${param.name}`}"
+                               ${param.required ? 'required' : ''}>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        // Render Functions
+        async function renderData() {
+            try {
+                const setRes = await fetch('/api/info');
+                if (!setRes.ok) {
+                    throw new Error(`HTTP error! status: ${setRes.status}`);
+                }
+                
+                let apiInfo = await setRes.json();
+                
+                if (apiInfo.categories) {
+                    processApiData(apiInfo);
+                } else if (apiInfo.endpoints) {
+                    const convertedData = {
+                        categories: apiInfo.endpoints.map(endpoint => ({
+                            name: endpoint.name.toUpperCase(),
+                            icon: getCategoryIcon(endpoint.name),
+                            color: getCategoryColor(endpoint.name),
+                            description: `APIs related to ${endpoint.name}`,
+                            items: endpoint.items.map(item => ({
+                                name: item.name || item.endpoint,
+                                displayName: item.displayName || item.name || item.endpoint,
+                                path: item.path || item.endpoint,
+                                method: item.method || 'GET',
+                                desc: item.desc || 'No description available',
+                                params: item.params || []
+                            }))
+                        }))
+                    };
+                    
+                    processApiData(convertedData);
+                } else {
+                    showNotification('No API data available from /api/info');
+                }
+                
+            } catch (error) {
+                console.error('Error loading API data:', error);
+                showNotification('Failed to load API data');
+                allCategories = [];
+                allApis = [];
+                updateUIWithEmptyData();
+            }
+        }
+
+        function processApiData(apiInfo) {
+            allCategories = apiInfo.categories || [];
+            allApis = [];
+            
+            allCategories.forEach(cat => {
+                if (!cat.icon) cat.icon = getCategoryIcon(cat.name);
+                if (!cat.color) cat.color = getCategoryColor(cat.name);
+                if (!cat.description) cat.description = `APIs related to ${cat.name}`;
+                
+                cat.items.forEach(item => {
+                    item.category = cat.name;
+                    item.categoryColor = cat.color;
+                    
+                    if (!item.displayName) item.displayName = item.name;
+                    if (!item.method) item.method = 'GET';
+                    if (!item.desc) item.desc = 'No description available';
+                    
+                    allApis.push(item);
+                });
+            });
+
+            updateUIWithData();
+        }
+
+        function updateUIWithData() {
+            document.getElementById('totalApis').textContent = allApis.length;
+            totalApisMessage.textContent = `Total APIs: ${allApis.length}`;
+            loadLeftSidebarCategories();
+            
+            if (allApis.length > 0) {
+                showNotification(`Loaded ${allCategories.length} categories with ${allApis.length} APIs`);
+            }
+        }
+
+        function updateUIWithEmptyData() {
+            document.getElementById('totalApis').textContent = '0';
+            totalApisMessage.textContent = 'Total APIs: 0';
+            loadLeftSidebarCategories();
+        }
+
+        // Helper Functions
+        function getMethodClass(method) {
+            switch(method.toUpperCase()) {
+                case 'GET': return 'method-get';
+                case 'POST': return 'method-post';
+                case 'PUT': return 'method-put';
+                case 'DELETE': return 'method-delete';
+                default: return 'bg-slate-700 text-slate-300';
+            }
+        }
+
+        function getCategoryIcon(categoryName) {
+            const name = categoryName.toUpperCase();
+            if (name.includes('TOOLS')) return '🔧';
+            if (name.includes('MEDIA')) return '🎬';
+            if (name.includes('UTILITIES') || name.includes('UTILITY')) return '⚡';
+            if (name.includes('SOCIAL')) return '📱';
+            if (name.includes('DEVELOPER') || name.includes('DEV')) return '💻';
+            if (name.includes('SECURITY')) return '🔒';
+            if (name.includes('GAMES') || name.includes('GAME')) return '🎮';
+            if (name.includes('FINANCE') || name.includes('MONEY')) return '💰';
+            if (name.includes('EDUCATION')) return '📚';
+            return '📁';
+        }
+
+        function getCategoryColor(categoryName) {
+            const name = categoryName.toUpperCase();
+            if (name.includes('TOOLS')) return 'category-tools';
+            if (name.includes('MEDIA')) return 'category-media';
+            if (name.includes('UTILITIES') || name.includes('UTILITY')) return 'category-utilities';
+            if (name.includes('SOCIAL')) return 'category-social';
+            if (name.includes('DEVELOPER') || name.includes('DEV')) return 'category-developer';
+            if (name.includes('SECURITY')) return 'category-security';
+            return 'category-tools';
+        }
+
+        function getCategoryColorClass(color) {
+            switch(color) {
+                case 'category-tools': return 'sky';
+                case 'category-media': return 'purple';
+                case 'category-utilities': return 'green';
+                case 'category-social': return 'yellow';
+                case 'category-developer': return 'pink';
+                case 'category-security': return 'red';
+                default: return 'sky';
+            }
+        }
+
+        // API Execution
+        async function runApi() {
+            if (!currentItem) return;
+            
+            // Show loading
+            emptyState.classList.add('hidden');
+            responseLoading.classList.remove('hidden');
+            responseContent.classList.add('hidden');
+            copyResBtn.classList.add('hidden');
+            
+            // Build URL
+            let url = currentItem.path;
+            if (!url.startsWith('http')) {
+                url = currentBaseUrl + url;
+            }
+            
+            const params = new URLSearchParams();
+            
+            // Get query parameters
+            const inputs = document.querySelectorAll('#apiQueryInputContainer input[data-key]');
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    params.append(input.dataset.key, input.value.trim());
+                }
+            });
+            
+            // Construct final URL
+            const baseUrl = url.split('?')[0];
+            const queryString = params.toString();
+            const finalUrl = queryString ? `${baseUrl}?${queryString}` : baseUrl;
+            
+            // Update displayed endpoint
+            document.getElementById('apiEndpointDisplay').textContent = finalUrl;
+            
+            // Execute request
+            const startTime = Date.now();
+            try {
+                const response = await fetch(finalUrl, {
+                    method: currentItem.method || 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const responseTime = Date.now() - startTime;
+                document.getElementById('responseTime').textContent = `${responseTime}ms`;
+                document.getElementById('responseStatus').textContent = `Status: ${response.status} ${response.statusText}`;
+                
+                const contentType = response.headers.get('content-type') || '';
+                
+                if (contentType.includes('application/json')) {
+                    const data = await response.json();
+                    const formatted = JSON.stringify(data, null, 2);
+                    responsePre.innerHTML = syntaxHighlight(formatted);
+                } else if (contentType.includes('text/')) {
+                    const text = await response.text();
+                    responsePre.textContent = text;
+                } else if (contentType.includes('image/')) {
+                    const blob = await response.blob();
+                    const imgUrl = URL.createObjectURL(blob);
+                    responsePre.innerHTML = `<img src="${imgUrl}" class="max-w-full h-auto rounded-lg border border-slate-700" alt="API Response Image">`;
+                } else {
+                    const text = await response.text();
+                    responsePre.textContent = text || 'No content returned';
+                }
+                
+                responseContent.classList.remove('hidden');
+                copyResBtn.classList.remove('hidden');
+                
+            } catch (error) {
+                responsePre.textContent = `Error: ${error.message}`;
+                responseContent.classList.remove('hidden');
+                copyResBtn.classList.remove('hidden');
+                document.getElementById('responseStatus').textContent = 'Status: Error';
+            } finally {
+                responseLoading.classList.add('hidden');
+            }
+        }
+
+        // Syntax Highlighting
+        function syntaxHighlight(json) {
+            if (typeof json !== 'string') {
+                json = JSON.stringify(json, null, 2);
+            }
+            
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        // Copy Functions
+        function copyEndpoint() {
+            const endpoint = document.getElementById('apiEndpointDisplay').textContent;
+            navigator.clipboard.writeText(endpoint).then(() => {
+                showNotification('Endpoint copied to clipboard');
+            });
+        }
+
+        function copyResponse() {
+            const text = responsePre.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Response copied to clipboard');
+            });
+        }
+
+        // Notification - Mobile Optimized
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notificationPopup.classList.remove('opacity-0', 'translate-y-10');
+            notificationPopup.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                notificationPopup.classList.remove('opacity-100', 'translate-y-0');
+                notificationPopup.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        // Make functions available globally
+        window.openApiModal = openApiModal;
+        window.closeSidebar = closeSidebar;
+        window.closeLeftSidebar = closeLeftSidebar;
+        window.showDashboard = showDashboard;
+        window.showCategory = showCategory;
+    </script>
+</body>
+</html>
