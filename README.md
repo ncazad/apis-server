@@ -15,5 +15,5 @@ A modern, responsive API dashboard with a sleek glassmorphism design.
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone <https://github.com/ncazad/apis-server.git>
 cd azadx69x-api-dashboard
